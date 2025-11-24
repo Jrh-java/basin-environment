@@ -157,6 +157,90 @@ export const constantRoutes: RouteRecordRaw[] = [
     ]
   },
   {
+    path: "/system",
+    component: Layouts,
+    redirect: "/system/main",
+    name: "System",
+    meta: {
+      title: "系统设置",
+      elIcon: "Setting"
+    },
+    children: [
+      {
+        path: "main",
+        component: () => import("@/pages/system/index.vue"),
+        name: "SystemMain",
+        meta: {
+          title: "系统设置首页"
+        }
+      },
+      {
+        path: "department",
+        component: () => import("@/pages/system/department/index.vue"),
+        name: "Department",
+        meta: {
+          title: "部门管理"
+        }
+      },
+      {
+        path: "employee",
+        component: () => import("@/pages/system/employee/index.vue"),
+        name: "Employee",
+        meta: {
+          title: "员工管理"
+        }
+      },
+      {
+        path: "menu",
+        component: () => import("@/pages/system/menu/menu-list.vue"),
+        name: "MenuList",
+        meta: {
+          title: "菜单管理"
+        }
+      },
+      {
+        path: "position",
+        component: () => import("@/pages/system/position/index.vue"),
+        name: "Position",
+        meta: {
+          title: "职务管理"
+        }
+      },
+      {
+        path: "role",
+        component: () => import("@/pages/system/role/index.vue"),
+        name: "Role",
+        meta: {
+          title: "角色管理"
+        }
+      },
+      {
+        path: "change-password",
+        component: () => import("@/pages/system/change-password/changepassword.vue"),
+        name: "ChangePassword",
+        meta: {
+          title: "修改密码"
+        }
+      },
+      {
+        path: "announcement",
+        component: () => import("@/pages/system/announcement.vue"),
+        name: "Announcement",
+        meta: {
+          title: "系统公告"
+        }
+      },
+      {
+        path: "operation-log",
+        component: () => import("@/pages/system/operation-log.vue"),
+        name: "OperationLog",
+        meta: {
+          title: "操作日志"
+        }
+      }
+    ]
+  },
+  {
     path: "/link",
     meta: {
       title: "文档链接",

@@ -20,6 +20,7 @@
     "dayjs": "1.11.18",
     "element-plus": "2.11.4",
     "js-cookie": "3.0.5",
+    "lodash": "4.17.21",
     "lodash-es": "4.17.21",
     "mitt": "3.0.1",
     "normalize.css": "8.0.1",

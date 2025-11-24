@@ -1,4 +1,3 @@
-import { getCurrentUserApi } from "@@/apis/users"
 import { setToken as _setToken, getToken, removeToken } from "@@/utils/cache/cookies"
 import { pinia } from "@/pinia"
 import { resetRouter } from "@/router"
@@ -23,12 +22,19 @@ export const useUserStore = defineStore("user", () => {
     token.value = value
   }
 
-  // 获取用户详情
+  const applyLogin = (payload: { userId: string, orgId: string, username: string | null, name: string, token: string, roleId: string }) => {
+    const roleId = String(payload.roleId || "")
+    const mappedRoles = roleId === "1" ? ["admin"] : ["editor"]
+    setToken(payload.token)
+    username.value = payload.name || (payload.username || "")
+    roles.value = mappedRoles.length > 0 ? mappedRoles : routerConfig.defaultRoles
+  }
+
   const getInfo = async () => {
-    const { data } = await getCurrentUserApi()
-    username.value = data.username
-    // 验证返回的 roles 是否为一个非空数组，否则塞入一个没有任何作用的默认角色，防止路由守卫逻辑进入无限循环
-    roles.value = data.roles?.length > 0 ? data.roles : routerConfig.defaultRoles
+    if (!roles.value.length) {
+      roles.value = routerConfig.defaultRoles
+    }
+    return { username: username.value, roles: roles.value }
   }
 
   // 模拟角色变化
@@ -64,7 +70,7 @@ export const useUserStore = defineStore("user", () => {
     }
   }
 
-  return { token, roles, username, setToken, getInfo, changeRoles, logout, resetToken }
+  return { token, roles, username, setToken, applyLogin, getInfo, changeRoles, logout, resetToken }
 })
 
 /**

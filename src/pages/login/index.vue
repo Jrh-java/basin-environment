@@ -31,8 +31,9 @@ const codeUrl = ref("")
 /** 登录表单数据 */
 const loginFormData: LoginRequestData = reactive({
   username: "admin",
-  password: "12345678",
-  code: ""
+  password: "123456",
+  verifyCode: "",
+  verifyKey: ""
 })
 
 /** 登录表单校验规则 */
@@ -42,9 +43,9 @@ const loginFormRules: FormRules = {
   ],
   password: [
     { required: true, message: "请输入密码", trigger: "blur" },
-    { min: 8, max: 16, message: "长度在 8 到 16 个字符", trigger: "blur" }
+    { min: 1, max: 16, message: "长度在 1 到 16 个字符", trigger: "blur" }
   ],
-  code: [
+  verifyCode: [
     { required: true, message: "请输入验证码", trigger: "blur" }
   ]
 }
@@ -58,7 +59,14 @@ function handleLogin() {
     }
     loading.value = true
     loginApi(loginFormData).then(({ data }) => {
-      userStore.setToken(data.token)
+      userStore.applyLogin({
+        userId: (data as any).userId,
+        orgId: (data as any).orgId,
+        username: (data as any).username ?? null,
+        name: (data as any).name,
+        token: data.token,
+        roleId: (data as any).roleId
+      })
       router.push(route.query.redirect ? decodeURIComponent(route.query.redirect as string) : "/")
     }).catch(() => {
       createCode()
@@ -72,12 +80,15 @@ function handleLogin() {
 /** 创建验证码 */
 function createCode() {
   // 清空已输入的验证码
-  loginFormData.code = ""
+  loginFormData.verifyCode = ""
   // 清空验证图片
   codeUrl.value = ""
   // 获取验证码图片
   getCaptchaApi().then((res) => {
-    codeUrl.value = res.data
+    codeUrl.value = res.data.image
+    loginFormData.verifyKey = res.data.uuid
+  }).catch(() => {
+    ElMessage.error("验证码获取失败")
   })
 }
 
@@ -118,9 +129,9 @@ createCode()
               @focus="handleFocus"
             />
           </el-form-item>
-          <el-form-item prop="code">
+          <el-form-item prop="verifyCode">
             <el-input
-              v-model.trim="loginFormData.code"
+              v-model.trim="loginFormData.verifyCode"
               placeholder="验证码"
               type="text"
               tabindex="3"
