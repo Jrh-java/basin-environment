@@ -1,0 +1,69 @@
+<!--********************************************************************
+* by jiawanlong
+*********************************************************************-->
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="./../../libs/cesium/Cesium1.98/Widgets/widgets.css" />
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="./turf.min.js"></script>
+    <script type="text/javascript" src="./../../libs/cesium/Cesium1.98/Cesium.js"></script>
+  </head>
+
+  <body style="margin: 0; overflow: hidden; background: #fff; width: 100%; height: 100%; position: absolute; top: 0">
+    <div id="map" style="margin: 0 auto; width: 100%; height: 100%"></div>
+
+    <script type="text/javascript">
+      const viewer = new Cesium.Viewer("map", {
+        imageryProvider: false,
+        baseLayerPicker: false,
+      })
+
+      var xyz = new Cesium.UrlTemplateImageryProvider({
+        url: "//data.mars3d.cn/tile/img/{z}/{x}/{y}.jpg",
+      })
+      viewer.imageryLayers.addImageryProvider(xyz)
+      // 开启帧率
+      viewer.scene.debugShowFramesPerSecond = true
+      const maskpointArray = []
+      axios
+        .get("./anzhouBorder.json") //读取区域json
+        .then((response) => {
+          for (let i = 0; i < response.data.features[0].geometry.coordinates[0].length; i++) {
+            maskpointArray.push(response.data.features[0].geometry.coordinates[0][i][0])
+            maskpointArray.push(response.data.features[0].geometry.coordinates[0][i][1])
+          }
+          var maskspoint = Cesium.Cartesian3.fromDegreesArray(maskpointArray)
+          const area = new Cesium.Entity({
+            id: 1,
+            polygon: {
+              hierarchy: {
+                positions: Cesium.Cartesian3.fromDegreesArray([100, 0, 100, 89, 150, 89, 150, 0]), //外部区域
+                holes: [
+                  {
+                    positions: maskspoint, //挖空区域
+                  },
+                ],
+              },
+              material: Cesium.Color.BLUE.withAlpha(0.6), //外部颜色
+            },
+          })
+          const line = new Cesium.Entity({
+            id: 2,
+            polyline: {
+              positions: maskspoint,
+              width: 2, //边界线宽
+              material: Cesium.Color.fromCssColorString("#6dcdeb"), //边界线颜色
+            },
+          })
+          viewer.entities.add(area)
+          viewer.entities.add(line)
+          viewer.flyTo(line, { duration: 3 })
+        })
+        .catch((response) => {
+          console.log(response)
+        })
+    </script>
+  </body>
+</html>

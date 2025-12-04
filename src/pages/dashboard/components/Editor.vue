@@ -5,7 +5,7 @@ import SvgDashboard from "../images/dashboard.svg?component" // vite-svg-loader 
 <template>
   <div class="app-container center">
     <SvgDashboard class="svg" />
-    <p>欢迎来到「Editor」角色专属首页</p>
+    <p>欢迎来到流域水环境监测平台</p>
   </div>
 </template>
 

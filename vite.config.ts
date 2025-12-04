@@ -8,9 +8,9 @@ import SvgComponent from "unplugin-svg-component/vite"
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers"
 import Components from "unplugin-vue-components/vite"
 import { defineConfig, loadEnv } from "vite"
+import cesium from "vite-plugin-cesium"
 import { VueMcp } from "vite-plugin-vue-mcp"
 import svgLoader from "vite-svg-loader"
-
 // Configuring Vite: https://cn.vite.dev/config
 export default defineConfig(({ mode }) => {
   const { VITE_PUBLIC_PATH } = loadEnv(mode, process.cwd(), "") as ImportMetaEnv
@@ -38,7 +38,7 @@ export default defineConfig(({ mode }) => {
       // 反向代理
       proxy: {
         "/authApi": {
-          target: "http://192.168.2.101:9999",
+          target: "http://121.204.138.114:9999",
           // 是否为 WebSocket
           ws: false,
           // 是否允许跨域
@@ -104,6 +104,7 @@ export default defineConfig(({ mode }) => {
     // 插件配置
     plugins: [
       vue(),
+      cesium(),
       // 支持将 SVG 文件导入为 Vue 组件
       svgLoader({
         defaultImport: "url",

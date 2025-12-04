@@ -1,5 +1,4 @@
 import type { AxiosInstance, AxiosRequestConfig } from "axios"
-import { getToken } from "@@/utils/cache/cookies"
 import axios from "axios"
 import { get, merge } from "lodash-es"
 import { useUserStore } from "@/pinia/stores/user"
@@ -38,6 +37,7 @@ function createInstance() {
       }
       switch (code) {
         case 0:
+        case 200:
           // 本系统采用 code === 0 来表示没有业务错误
           return apiData
         case 401:
@@ -100,7 +100,7 @@ function createInstance() {
 /** 创建请求方法 */
 function createRequest(instance: AxiosInstance) {
   return <T>(config: AxiosRequestConfig): Promise<T> => {
-    const token = getToken()
+    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZXhwIjoxNzYxMjQ1NTIyfQ.2t7SBATCis2E0HxdrzNLDNrvrP2_yt_miPWeN6FqHeo"
     // 默认配置
     const defaultConfig: AxiosRequestConfig = {
       // 接口地址
@@ -108,8 +108,9 @@ function createRequest(instance: AxiosInstance) {
       // 请求头
       headers: {
         // 携带 Token
-        "Authorization": token ? `Bearer ${token}` : undefined,
+        "x-access-token": token || undefined,
         "Content-Type": "application/json"
+
       },
       // 请求体
       data: {},

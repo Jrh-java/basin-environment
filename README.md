@@ -42,6 +42,32 @@ V3 Admin Vite is a well-crafted backend management system template, built with p
 </details>
 
 <details>
+<summary>Search + Table 布局组件</summary>
+
+<br>
+
+统一使用 `SearchTableLayout` 封装页面的搜索与表格区域，仅样式与布局，无业务逻辑。
+
+示例：
+
+```vue
+<SearchTableLayout>
+  <template #searchSlot>
+    <el-input v-model="stationName" placeholder="请输入站点名称" />
+    <el-button type="primary" @click="onSearch">搜索</el-button>
+  </template>
+  <template #tableSlot>
+    <el-table :data="list"> <!-- ...columns --> </el-table>
+    <el-pagination :total="total" />
+  </template>
+</SearchTableLayout>
+```
+
+规范文档：`src/common/components/SearchTableLayout/README.md`
+
+</details>
+
+<details>
 <summary>Local Development</summary>
 
 <br>
