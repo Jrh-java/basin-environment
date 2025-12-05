@@ -61,40 +61,42 @@ export const columns: ColumnDef[] = [
     prop: "phosphorus"
   },
   {
-    label: "行政区划",
-    align: "center",
-    prop: "administrativeRegion"
-  },
-  {
-    label: "电导率",
-    align: "center",
-    prop: "conductivity"
-  },
-  {
-    label: "浊度",
-    align: "center",
-    prop: "turbidity"
-  },
-  {
-    label: "叶绿素（mg/L）",
-    align: "center",
-    prop: "chlorophyllMgL"
-  },
-  {
-    label: "藻类密度（mg/L）",
-    align: "center",
-    prop: "algaeDensityMgL"
-  },
-  {
-    label: "总氮",
-    align: "center",
-    prop: "nitrogen"
-  },
-  {
     label: "氨氮（mg/L）",
     align: "center",
     prop: "ammoniaNitrogenMgL"
+  },
+  {
+    label: "行政区划",
+    align: "center",
+    prop: "administrativeRegion"
   }
+
+  // {
+  //   label: "电导率",
+  //   align: "center",
+  //   prop: "conductivity"
+  // },
+  // {
+  //   label: "浊度",
+  //   align: "center",
+  //   prop: "turbidity"
+  // },
+  // {
+  //   label: "叶绿素（mg/L）",
+  //   align: "center",
+  //   prop: "chlorophyllMgL"
+  // },
+  // {
+  //   label: "藻类密度（mg/L）",
+  //   align: "center",
+  //   prop: "algaeDensityMgL"
+  // },
+  // {
+  //   label: "总氮",
+  //   align: "center",
+  //   prop: "nitrogen"
+  // },
+
 ]
 // 为所有没有 width 属性的列自动添加 width: 120
 columns.forEach((col) => {
