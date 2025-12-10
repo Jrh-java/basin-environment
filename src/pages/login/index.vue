@@ -30,10 +30,10 @@ const codeUrl = ref("")
 
 /** 登录表单数据 */
 const loginFormData: LoginRequestData = reactive({
-  username: "admin",
-  password: "123456",
-  verifyCode: "",
-  verifyKey: ""
+  username: "",
+  password: "",
+  captcha: "",
+  checkKey: ""
 })
 
 /** 登录表单校验规则 */
@@ -45,7 +45,7 @@ const loginFormRules: FormRules = {
     { required: true, message: "请输入密码", trigger: "blur" },
     { min: 1, max: 16, message: "长度在 1 到 16 个字符", trigger: "blur" }
   ],
-  verifyCode: [
+  captcha: [
     { required: true, message: "请输入验证码", trigger: "blur" }
   ]
 }
@@ -58,14 +58,15 @@ function handleLogin() {
       return
     }
     loading.value = true
-    loginApi(loginFormData).then(({ data }) => {
+    loginApi(loginFormData).then((res) => {
+      const { result } = res as any
       userStore.applyLogin({
-        userId: (data as any).userId,
-        orgId: (data as any).orgId,
-        username: (data as any).username ?? null,
-        name: (data as any).name,
-        token: data.token,
-        roleId: (data as any).roleId
+        userId: result.userId,
+        orgId: result.orgId,
+        username: result.username ?? null,
+        name: result.name,
+        token: result.token,
+        roleId: result.roleId
       })
       router.push(route.query.redirect ? decodeURIComponent(route.query.redirect as string) : "/")
     }).catch(() => {
@@ -80,13 +81,20 @@ function handleLogin() {
 /** 创建验证码 */
 function createCode() {
   // 清空已输入的验证码
-  loginFormData.verifyCode = ""
+  loginFormData.captcha = ""
   // 清空验证图片
   codeUrl.value = ""
+
+  // 生成 checkKey
+  const checkKey = new Date().getTime() + Math.random().toString(36).slice(-4)
+  loginFormData.checkKey = checkKey
+
   // 获取验证码图片
-  getCaptchaApi().then((res) => {
-    codeUrl.value = res.data.image
-    loginFormData.verifyKey = res.data.uuid
+  getCaptchaApi(checkKey).then((res: any) => {
+    // 根据需求：保存返回的 checkKey
+    if (res.success) {
+      codeUrl.value = res.result
+    }
   }).catch(() => {
     ElMessage.error("验证码获取失败")
   })
@@ -102,7 +110,8 @@ createCode()
     <Owl :close-eyes="isFocus" />
     <div class="login-card">
       <div class="title">
-        <img src="@@/assets/images/layouts/logo-text-2.png">
+        <!-- <img src="@@/assets/images/layouts/logo-text-2.png"> -->
+        <h1>流域水环境监测平台</h1>
       </div>
       <div class="content">
         <el-form ref="loginFormRef" :model="loginFormData" :rules="loginFormRules" @keyup.enter="handleLogin">
@@ -129,9 +138,9 @@ createCode()
               @focus="handleFocus"
             />
           </el-form-item>
-          <el-form-item prop="verifyCode">
+          <el-form-item prop="captcha">
             <el-input
-              v-model.trim="loginFormData.verifyCode"
+              v-model.trim="loginFormData.captcha"
               placeholder="验证码"
               type="text"
               tabindex="3"
@@ -197,7 +206,7 @@ createCode()
       }
     }
     .content {
-      padding: 20px 50px 50px 50px;
+      padding: 0px 50px 50px 50px;
       :deep(.el-input-group__append) {
         padding: 0;
         overflow: hidden;

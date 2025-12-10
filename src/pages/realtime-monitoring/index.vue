@@ -248,7 +248,7 @@ onMounted(async () => {
                 :formatter="col.formatter"
               />
 
-              <el-table-column label="趋势" fixed="right" width="100" align="center">
+              <el-table-column label="趋势" fixed="right" align="center" width="*">
                 <template #default="{ row }">
                   <div class="trend-cell">
                     <el-button link type="primary" @click="onView(row)">

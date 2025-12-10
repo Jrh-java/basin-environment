@@ -14,13 +14,14 @@ export const columns: ColumnDef[] = [
     label: "站点名称",
     align: "center",
     fixed: "left",
-    prop: "stationName"
+    prop: "stationName",
+    width: 120
   },
   {
     label: "测站编码",
     align: "center",
-    prop: "stationCode"
-
+    prop: "stationCode",
+    width: 120
   },
   {
     label: "联网状态",
@@ -32,43 +33,50 @@ export const columns: ColumnDef[] = [
   {
     label: "监测时间",
     align: "center",
-    prop: "monitoringTime"
-
+    prop: "monitoringTime",
+    width: 120
   },
   {
     label: "溶解氧（mg/L）",
     align: "center",
-    prop: "dissolvedOxygenMgL"
+    prop: "dissolvedOxygenMgL",
+    width: 120
   },
   {
     label: "ph值",
     align: "center",
-    prop: "phValue"
+    prop: "phValue",
+    width: 120
   },
   {
     label: "水温",
     align: "center",
-    prop: "waterTemperature"
+    prop: "waterTemperature",
+    width: 120
   },
   {
     label: "高锰酸盐",
     align: "center",
-    prop: "permanganate"
+    prop: "permanganate",
+    width: 120
   },
   {
     label: "总磷",
     align: "center",
-    prop: "phosphorus"
+    prop: "phosphorus",
+    width: 120
   },
   {
     label: "氨氮（mg/L）",
     align: "center",
-    prop: "ammoniaNitrogenMgL"
+    prop: "ammoniaNitrogenMgL",
+    width: 120
   },
   {
     label: "行政区划",
     align: "center",
-    prop: "administrativeRegion"
+    prop: "administrativeRegion",
+    width: 120
   }
 
   // {

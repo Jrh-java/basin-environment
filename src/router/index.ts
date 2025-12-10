@@ -471,85 +471,85 @@ export const constantRoutes: RouteRecordRaw[] = [
         ]
       }
     ]
-  },
-  {
-    path: "/river-discharge-outlet-management",
-    component: Layouts,
-    name: "RiverDischargeOutletManagement",
-    meta: {
-      title: "入河排污口管理系统",
-      roles: []
-    },
-    redirect: "/river-discharge-outlet-management/outlet-list",
-    children: [
-      {
-        path: "outlet-list",
-        component: () => import("@/pages/river-discharge-outlet-management/outlet-list/index.vue"),
-        name: "OutletList",
-        meta: {
-          title: "入河排污口清单",
-          roles: []
-        }
-      },
-      {
-        path: "discharge-events",
-        component: () => import("@/pages/river-discharge-outlet-management/discharge-events/index.vue"),
-        name: "DischargeEvents",
-        meta: {
-          title: "入河排污事件",
-          roles: []
-        }
-      },
-      {
-        path: "query-stats",
-        component: () => import("@/pages/river-discharge-outlet-management/query-stats/index.vue"),
-        name: "QueryStats",
-        meta: {
-          title: "查询统计",
-          roles: []
-        }
-      }
-    ]
-  },
-  {
-    path: "/pollution-source-control-system",
-    component: Layouts,
-    name: "PollutionSourceControlSystem",
-    meta: {
-      title: "污染源管控系统",
-      roles: []
-    },
-    redirect: "/pollution-source-control-system/basic-info",
-    children: [
-      {
-        path: "basic-info",
-        component: () => import("@/pages/PollutionSourceControlSystem/BasicInfo.vue"),
-        name: "BasicInfo",
-        meta: {
-          title: "污染源基本信息",
-          roles: []
-        }
-      },
-      {
-        path: "monitoring-analysis",
-        component: () => import("@/pages/PollutionSourceControlSystem/MonitoringAnalysis.vue"),
-        name: "MonitoringAnalysis",
-        meta: {
-          title: "污染源监测分析",
-          roles: []
-        }
-      },
-      {
-        path: "traceability-analysis",
-        component: () => import("@/pages/PollutionSourceControlSystem/TraceabilityAnalysis.vue"),
-        name: "TraceabilityAnalysis",
-        meta: {
-          title: "污染溯源分析",
-          roles: []
-        }
-      }
-    ]
   }
+  // {
+  //   path: "/river-discharge-outlet-management",
+  //   component: Layouts,
+  //   name: "RiverDischargeOutletManagement",
+  //   meta: {
+  //     title: "入河排污口管理系统",
+  //     roles: []
+  //   },
+  //   redirect: "/river-discharge-outlet-management/outlet-list",
+  //   children: [
+  //     {
+  //       path: "outlet-list",
+  //       component: () => import("@/pages/river-discharge-outlet-management/outlet-list/index.vue"),
+  //       name: "OutletList",
+  //       meta: {
+  //         title: "入河排污口清单",
+  //         roles: []
+  //       }
+  //     },
+  //     {
+  //       path: "discharge-events",
+  //       component: () => import("@/pages/river-discharge-outlet-management/discharge-events/index.vue"),
+  //       name: "DischargeEvents",
+  //       meta: {
+  //         title: "入河排污事件",
+  //         roles: []
+  //       }
+  //     },
+  //     {
+  //       path: "query-stats",
+  //       component: () => import("@/pages/river-discharge-outlet-management/query-stats/index.vue"),
+  //       name: "QueryStats",
+  //       meta: {
+  //         title: "查询统计",
+  //         roles: []
+  //       }
+  //     }
+  //   ]
+  // },
+  // {
+  //   path: "/pollution-source-control-system",
+  //   component: Layouts,
+  //   name: "PollutionSourceControlSystem",
+  //   meta: {
+  //     title: "污染源管控系统",
+  //     roles: []
+  //   },
+  //   redirect: "/pollution-source-control-system/basic-info",
+  //   children: [
+  //     {
+  //       path: "basic-info",
+  //       component: () => import("@/pages/PollutionSourceControlSystem/BasicInfo.vue"),
+  //       name: "BasicInfo",
+  //       meta: {
+  //         title: "污染源基本信息",
+  //         roles: []
+  //       }
+  //     },
+  //     {
+  //       path: "monitoring-analysis",
+  //       component: () => import("@/pages/PollutionSourceControlSystem/MonitoringAnalysis.vue"),
+  //       name: "MonitoringAnalysis",
+  //       meta: {
+  //         title: "污染源监测分析",
+  //         roles: []
+  //       }
+  //     },
+  //     {
+  //       path: "traceability-analysis",
+  //       component: () => import("@/pages/PollutionSourceControlSystem/TraceabilityAnalysis.vue"),
+  //       name: "TraceabilityAnalysis",
+  //       meta: {
+  //         title: "污染溯源分析",
+  //         roles: []
+  //       }
+  //     }
+  //   ]
+  // }
   //   {
   //   path: "/system",
   //   component: Layouts,
@@ -645,8 +645,7 @@ export const dynamicRoutes: RouteRecordRaw[] = [
   {
     path: "/user-manager",
     component: Layouts,
-    redirect: "/user-manager/index",
-    name: "UserManagerWrapper",
+    name: "UserManager",
     meta: {
       title: "用户管理",
       roles: ["admin"]
@@ -655,9 +654,9 @@ export const dynamicRoutes: RouteRecordRaw[] = [
       {
         path: "index",
         component: () => import("@/pages/user-manager/index.vue"),
-        name: "UserManager",
+        name: "UserManagerIndex",
         meta: {
-          title: "用户管理",
+          title: "用户列表",
           roles: ["admin"]
         }
       }

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { FormInstance, FormRules } from "element-plus"
 import type { UserData } from "../apis/type"
-import { ElMessage } from "element-plus"
 import { reactive, ref } from "vue"
 import { changePasswordApi } from "../apis"
 
@@ -46,7 +45,7 @@ function handleClose() {
 }
 
 function handleSubmit() {
-  formRef.value?.validate((valid: boolean) => {
+  formRef.value?.validate((valid) => {
     if (valid) {
       loading.value = true
       // Encrypt passwords

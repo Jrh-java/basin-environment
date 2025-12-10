@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { FormInstance, FormRules } from "element-plus"
 import type { UserData } from "../apis/type"
-import { ElMessage } from "element-plus"
 import { computed, reactive, ref } from "vue"
 import { addUserApi, updateUserApi } from "../apis"
 
@@ -82,7 +81,7 @@ function handleClose() {
 }
 
 function handleSubmit() {
-  formRef.value?.validate((valid: boolean) => {
+  formRef.value?.validate((valid) => {
     if (valid) {
       loading.value = true
       const api = isEdit.value ? updateUserApi : addUserApi
@@ -90,8 +89,7 @@ function handleSubmit() {
 
       // Encrypt password if present (for add)
       if (!isEdit.value) {
-        // data.password = data.password
-        // data.confirmPassword = data.confirmPassword
+        // Passwords are sent in plain text as per requirements
       } else {
         // Edit mode usually doesn't send password unless changed, but here we use separate API for password
         // So we remove password fields for update user info

@@ -1,8 +1,8 @@
 export interface LoginRequestData {
   username: string
   password: string
-  verifyCode: string
-  verifyKey: string
+  captcha: string
+  checkKey: string
 }
 
 export type CaptchaResponseData = ApiResponseData<{ image: string, uuid: string }>

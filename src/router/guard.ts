@@ -34,26 +34,23 @@ export function registerNavigationGuard(router: Router) {
     // 如果已经登录，并准备进入 Login 页面，则重定向到主页
     if (to.path === LOGIN_PATH) return "/"
 
-    // 如果用户已经获得其权限角色
-    if (userStore.roles.length !== 0) {
-      if (permissionStore.routes.length === 0) {
-        routerConfig.dynamic ? permissionStore.setRoutes(userStore.roles) : permissionStore.setAllRoutes()
-        permissionStore.addRoutes.forEach(route => router.addRoute(route))
-      }
-      return true
-    }
+    // 如果用户已经获得其权限角色，且动态路由已加载
+    if (userStore.roles.length !== 0 && permissionStore.routes.length !== 0) return true
+
     // 否则要重新获取权限角色
     try {
       await userStore.getInfo()
       // 判断当前用户是否为管理员
-      const { result } = await isCurrentUserAdmin()
-      if (result && !userStore.roles.includes("admin")) {
+      const res: any = await isCurrentUserAdmin()
+      if (res.result && !userStore.roles.includes("admin")) {
         userStore.roles.push("admin")
       }
       // 注意：角色必须是一个数组！ 例如: ["admin"] 或 ["developer", "editor"]
       const roles = userStore.roles
+      console.log("[Route Guard] Current Roles:", roles)
       // 生成可访问的 Routes
       routerConfig.dynamic ? permissionStore.setRoutes(roles) : permissionStore.setAllRoutes()
+      console.log("[Route Guard] Added Routes:", permissionStore.addRoutes)
       // 将 "有访问权限的动态路由" 添加到 Router 中
       permissionStore.addRoutes.forEach(route => router.addRoute(route))
       // 设置 replace: true, 因此导航将不会留下历史记录

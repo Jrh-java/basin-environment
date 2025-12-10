@@ -1,4 +1,5 @@
 import type { AxiosInstance, AxiosRequestConfig } from "axios"
+import { getToken } from "@@/utils/cache/cookies"
 import axios from "axios"
 import { get, merge } from "lodash-es"
 import { useUserStore } from "@/pinia/stores/user"
@@ -100,7 +101,7 @@ function createInstance() {
 /** 创建请求方法 */
 function createRequest(instance: AxiosInstance) {
   return <T>(config: AxiosRequestConfig): Promise<T> => {
-    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZXhwIjoxNzYxMjQ1NTIyfQ.2t7SBATCis2E0HxdrzNLDNrvrP2_yt_miPWeN6FqHeo"
+    const token = getToken()
     // 默认配置
     const defaultConfig: AxiosRequestConfig = {
       // 接口地址

@@ -22,7 +22,6 @@ const seriesKeys = [
   "dissolvedOxygenMgL",
   "phValue",
   "waterTemperature",
-  "algaeDensityMgL",
   "ammoniaNitrogenMgL",
   "permanganate",
   "phosphorus"

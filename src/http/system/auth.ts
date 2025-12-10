@@ -4,22 +4,32 @@ import { request } from "@/http/axios"
 /**
  * 获取图形验证码
  */
-export function getCaptchaApi() {
+export function getCaptchaApi(key: string) {
   return request<CaptchaResponseData>({
-    url: "/authApi/reservoir/auth/captcha/getBase64",
+    url: `/sys/randomImage/${key}`,
     method: "get"
   })
 }
 
 /**
  * 登录接口
- * @param data {{username: string, password: string, verifyCode: string, verifyKey: string}}
+ * @param data {{username: string, password: string, captcha: string, checkKey: string}}
  */
 export function loginApi(data: LoginRequestData) {
   return request<LoginResponseData>({
-    url: "/authApi/reservoir/auth/loginAuth/login",
+    url: "/sys/login",
     method: "post",
     data
+  })
+}
+
+/**
+ * 判断当前用户是否为管理员
+ */
+export function isCurrentUserAdmin() {
+  return request<boolean>({
+    url: "/sys/isCurrentUserAdminSign",
+    method: "get"
   })
 }
 
@@ -32,15 +42,5 @@ export function updateUsersStatusOrPass(data: { password: string, userIds: strin
     url: "authApi/reservoir/sys/sysAdminUser/updateUsersStatusOrPass",
     method: "post",
     data
-  })
-}
-
-/**
- * 判断当前用户是否为管理员
- */
-export function isCurrentUserAdmin() {
-  return request<ApiResponseData<boolean>>({
-    url: "/sys/isCurrentUserAdminSign",
-    method: "get"
   })
 }

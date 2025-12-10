@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { UserData } from "./apis/type"
-import { ElMessage, ElMessageBox } from "element-plus"
+// import { ElMessage, ElMessageBox } from "element-plus"
 import { onMounted, reactive, ref } from "vue"
 import { deleteUserApi, getUserListApi } from "./apis"
 import PasswordModal from "./components/PasswordModal.vue"

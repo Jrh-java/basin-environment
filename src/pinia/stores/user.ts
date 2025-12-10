@@ -2,6 +2,7 @@ import { setToken as _setToken, getToken, removeToken } from "@@/utils/cache/coo
 import { pinia } from "@/pinia"
 import { resetRouter } from "@/router"
 import { routerConfig } from "@/router/config"
+import { usePermissionStore } from "./permission"
 import { useSettingsStore } from "./settings"
 import { useTagsViewStore } from "./tags-view"
 
@@ -12,6 +13,7 @@ export const useUserStore = defineStore("user", () => {
 
   const username = ref<string>("")
 
+  const permissionStore = usePermissionStore()
   const tagsViewStore = useTagsViewStore()
 
   const settingsStore = useSettingsStore()
@@ -53,6 +55,7 @@ export const useUserStore = defineStore("user", () => {
     roles.value = []
     resetRouter()
     resetTagsView()
+    permissionStore.resetRoutes()
   }
 
   // 重置 Token
