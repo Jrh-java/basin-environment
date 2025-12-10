@@ -642,7 +642,27 @@ export const constantRoutes: RouteRecordRaw[] = [
  * @description 必须带有唯一的 Name 属性
  */
 export const dynamicRoutes: RouteRecordRaw[] = [
-
+  {
+    path: "/user-manager",
+    component: Layouts,
+    redirect: "/user-manager/index",
+    name: "UserManagerWrapper",
+    meta: {
+      title: "用户管理",
+      roles: ["admin"]
+    },
+    children: [
+      {
+        path: "index",
+        component: () => import("@/pages/user-manager/index.vue"),
+        name: "UserManager",
+        meta: {
+          title: "用户管理",
+          roles: ["admin"]
+        }
+      }
+    ]
+  }
 ]
 
 /** 路由实例 */

@@ -34,3 +34,13 @@ export function updateUsersStatusOrPass(data: { password: string, userIds: strin
     data
   })
 }
+
+/**
+ * 判断当前用户是否为管理员
+ */
+export function isCurrentUserAdmin() {
+  return request<ApiResponseData<boolean>>({
+    url: "/sys/isCurrentUserAdminSign",
+    method: "get"
+  })
+}

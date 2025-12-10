@@ -3,6 +3,7 @@ import { setRouteChange } from "@@/composables/useRouteListener"
 import { useTitle } from "@@/composables/useTitle"
 import { getToken } from "@@/utils/cache/cookies"
 import NProgress from "nprogress"
+import { isCurrentUserAdmin } from "@/http/system/auth"
 import { usePermissionStore } from "@/pinia/stores/permission"
 import { useUserStore } from "@/pinia/stores/user"
 import { routerConfig } from "@/router/config"
@@ -41,6 +42,11 @@ export function registerNavigationGuard(router: Router) {
     // 否则要重新获取权限角色
     try {
       await userStore.getInfo()
+      // 判断当前用户是否为管理员
+      const { result } = await isCurrentUserAdmin()
+      if (result && !userStore.roles.includes("admin")) {
+        userStore.roles.push("admin")
+      }
       // 注意：角色必须是一个数组！ 例如: ["admin"] 或 ["developer", "editor"]
       const roles = userStore.roles
       // 生成可访问的 Routes
